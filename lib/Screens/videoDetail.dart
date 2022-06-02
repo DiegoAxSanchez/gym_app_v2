@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -11,7 +8,7 @@ class Video extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Color.fromARGB(226, 32, 32, 32),
       body: VideoPage(),
     );
@@ -20,8 +17,10 @@ class Video extends StatelessWidget {
 
 /// //TODO doesnt work
 class VideoPage extends StatefulWidget {
+  const VideoPage({Key? key}) : super(key: key);
+
   @override
-  _VideoPageState createState() => _VideoPageState();
+  _VideoPageState createState() => _VideoPageState(); // TODO wanrning ?
 }
 
 class _VideoPageState extends State<VideoPage> {
@@ -29,10 +28,10 @@ class _VideoPageState extends State<VideoPage> {
   late TextEditingController _idController;
   late TextEditingController _seekToController;
 
-  late PlayerState _playerState;
-  late YoutubeMetaData _videoMetaData;
-  double _volume = 100;
-  bool _muted = false;
+  //late PlayerState _playerState; // ctrl-f playerState
+  //late YoutubeMetaData _videoMetaData; // ctrl-f
+  //double _volume = 100;
+  //bool _muted = false;
   bool _isPlayerReady = false;
 
   final List<String> _ids = [
@@ -56,15 +55,15 @@ class _VideoPageState extends State<VideoPage> {
     )..addListener(listener);
     _idController = TextEditingController();
     _seekToController = TextEditingController();
-    _videoMetaData = const YoutubeMetaData();
-    _playerState = PlayerState.unknown;
+    //_videoMetaData = const YoutubeMetaData();
+    //_playerState = PlayerState.unknown;
   }
 
   void listener() {
     if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
       setState(() {
-        _playerState = _controller.value.playerState;
-        _videoMetaData = _controller.metadata;
+        //_playerState = _controller.value.playerState;
+        // _videoMetaData = _controller.metadata;
       });
     }
   }

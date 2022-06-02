@@ -8,9 +8,9 @@ import 'package:gym_app_v2/Screens/components/addForm.dart';
 import 'package:gym_app_v2/Screens/videoDetail.dart';
 
 class ExerciseDetail extends StatelessWidget {
-  Exercise exercise;
+  final Exercise exercise;
 
-  ExerciseDetail({Key? key, required this.exercise}) : super(key: key);
+  const ExerciseDetail({Key? key, required this.exercise}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     bool video = false;
@@ -71,11 +71,11 @@ class ExerciseDetail extends StatelessWidget {
                   IconButton(
                     icon: Icon(Icons.favorite, color: Colors.blue[600]),
                     onPressed: () async {
-                      exercise.id = exercise.id + '123';
+                      exercise.id = '${exercise.id}123';
                       SavedDB.addOne(exercise, 'favourites');
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           duration: Duration(seconds: 5),
                           content: Text('Exercise added to your favourites'),
                         ),
@@ -131,7 +131,7 @@ class ExerciseDetail extends StatelessWidget {
                       SavedDB.delete(int.parse(exercise.id), 'favourites');
                       Navigator.popUntil(context, ModalRoute.withName('/'));
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           duration: Duration(seconds: 5),
                           content:
                               Text('Exercise deleted from your favourites'),
@@ -184,7 +184,7 @@ class ExerciseDetail extends StatelessWidget {
                       Navigator.push<void>(
                         context,
                         MaterialPageRoute<void>(
-                          builder: (BuildContext context) => Video(),
+                          builder: (BuildContext context) => const Video(),
                         ),
                       );
                     },

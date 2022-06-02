@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:gym_app_v2/Database/database_helper.dart';
 import 'package:gym_app_v2/Screens/exerciseDetail.dart';
 import 'package:http/http.dart' as http;
@@ -8,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:gym_app_v2/Models/Exercise.dart';
 
 class ExerciseCard extends StatelessWidget {
-  ExerciseCard({super.key, required this.exercise});
-  Exercise exercise;
+  const ExerciseCard({super.key, required this.exercise});
+  final Exercise exercise;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +23,12 @@ class ExerciseCard extends StatelessWidget {
                   await http.get(Uri.parse(exercise.gifUrl));
               exercise.gif = base64.encode(response.bodyBytes);
             } catch (err) {
-              print('No internet mah dude');
+              if (kDebugMode) {
+                print('No internet mah dude');
+              }
             }
             Navigator.push(
+              //TODO heedthe warnings
               context,
               MaterialPageRoute(
                 builder: (context) => ExerciseDetail(
@@ -49,11 +53,11 @@ class ExerciseCard extends StatelessWidget {
                     icon: Icon(Icons.favorite, color: Colors.blue[600]),
                     iconSize: 34,
                     onPressed: () async {
-                      exercise.id = exercise.id + '01';
+                      exercise.id = '${exercise.id}01';
                       SavedDB.addOne(exercise, 'favourites');
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           duration: Duration(seconds: 5),
                           content: Text('Exercise added to your favourites'),
                         ),

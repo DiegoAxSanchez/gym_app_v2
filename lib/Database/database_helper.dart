@@ -120,7 +120,7 @@ class SavedDB {
     } catch (err) {
       debugPrint("Something went wrong when deleting an item: $err");
     }
-    return "Exercise ${id} efface avec succes";
+    return "Exercise $id efface avec succes";
   }
 
   static Future<void> addAll(
@@ -152,7 +152,9 @@ class SavedDB {
         http.Response response = await http.get(Uri.parse(exercise.gifUrl));
         exercise.gif = base64.encode(response.bodyBytes);
       } catch (err) {
-        print('No internet mah dude');
+        if (kDebugMode) {
+          print('No internet mah dude');
+        }
       }
       await database.insert('categories', exercise.toMap(),
           conflictAlgorithm: sql.ConflictAlgorithm.replace);

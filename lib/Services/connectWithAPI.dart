@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:gym_app_v2/Models/Exercise.dart';
-import 'package:gym_app_v2/Database/database_helper.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<Exercise>> connectWithAPI() async {

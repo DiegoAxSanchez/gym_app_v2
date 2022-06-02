@@ -7,7 +7,7 @@ import 'package:gym_app_v2/Screens/components/exerciseCard.dart';
 import 'package:gym_app_v2/Services/fetchData.dart';
 
 class Favourites extends StatefulWidget {
-  Favourites({
+  const Favourites({
     super.key,
   });
   @override

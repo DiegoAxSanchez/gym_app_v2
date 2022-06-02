@@ -4,8 +4,8 @@ import 'package:gym_app_v2/Screens/components/exerciseCard.dart';
 import 'package:gym_app_v2/Services/fetchData.dart';
 
 class CategoryScreen extends StatelessWidget {
-  CategoryScreen({super.key, required this.categoryName});
-  String categoryName;
+  const CategoryScreen({super.key, required this.categoryName});
+  final String categoryName;
 
   @override
   Widget build(BuildContext context) {

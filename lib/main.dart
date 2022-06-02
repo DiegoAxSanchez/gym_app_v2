@@ -4,9 +4,7 @@ import 'dart:typed_data';
 
 import 'package:gym_app_v2/Database/database_helper.dart';
 import 'package:gym_app_v2/Screens/Favourites.dart';
-import 'package:gym_app_v2/Screens/components/addForm.dart';
 import 'package:gym_app_v2/Screens/categoryDetail.dart';
-import 'package:gym_app_v2/Services/fetchData.dart';
 import 'package:gym_app_v2/Services/fetchData.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +16,7 @@ import 'Models/Exercise.dart';
 // TODO add calendar to plan workouts + alarms/reminders
 void main() async {
   runApp(
-    MaterialApp(
+    const MaterialApp(
       title: 'gym_app_v2',
       home: Home_page(),
       initialRoute: '/',
@@ -27,7 +25,7 @@ void main() async {
 }
 
 class Home_page extends StatefulWidget {
-  Home_page({
+  const Home_page({
     super.key,
   });
   @override
@@ -122,19 +120,19 @@ class _MyHomePageState extends State<Home_page> {
           direction: Axis.horizontal, //use vertical to show  on vertical axis
           children: <Widget>[
             Container(
-              margin: EdgeInsets.all(8),
-              alignment: Alignment(0.1, 0),
+              margin: const EdgeInsets.all(8),
+              alignment: const Alignment(0.1, 0),
               child: FloatingActionButton(
                 heroTag: "FavouritesButton",
                 tooltip: "Go to Favourites",
                 onPressed: () async {
                   await Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Favourites()),
+                    MaterialPageRoute(builder: (context) => const Favourites()),
                   ).then(reload);
                 },
                 backgroundColor: Colors.red[800],
-                child: Icon(
+                child: const Icon(
                   Icons.favorite_outline,
                   color: Colors.white,
                 ),

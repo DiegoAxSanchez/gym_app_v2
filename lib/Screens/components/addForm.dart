@@ -1,10 +1,22 @@
-import 'package:gym_app_v2/Models/Patient.dart';
-import 'package:gym_app_v2/databaseHelper/database_helper.dart';
+import 'package:gym_app_v2/Models/Exercise.dart';
+import 'package:gym_app_v2/Database/database_helper.dart';
 import 'package:gym_app_v2/main.dart';
 import 'package:flutter/material.dart';
 
+class AddFormView extends StatelessWidget {
+  AddFormView({Key? key, required this.exercise}) : super(key: key);
+  Exercise exercise;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: AddForm(exercise: exercise),
+    );
+  }
+}
+
 class AddForm extends StatefulWidget {
-  const AddForm({super.key});
+  AddForm({super.key, required this.exercise});
+  Exercise exercise;
 
   @override
   AddFormState createState() {
@@ -25,18 +37,18 @@ class AddFormState extends State<AddForm> {
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    String nom = 'ERROR';
-    String prenom = 'ERROR';
+    String newName = 'ERROR';
+    String newDescription = 'ERROR';
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Patient : '),
+        title: const Text('Exercise : '),
       ),
       body: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Nom du nouveau patient'),
+            Text('New Exercise name'),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
@@ -45,12 +57,12 @@ class AddFormState extends State<AddForm> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter some text';
                   }
-                  nom = value;
+                  newName = value;
                   return null;
                 },
               ),
             ),
-            Text('Prenom du nouveau patient'),
+            Text('New exercise description'),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
               child: TextFormField(
@@ -59,7 +71,7 @@ class AddFormState extends State<AddForm> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter some text';
                   }
-                  prenom = value;
+                  newDescription = value;
                   return null;
                 },
               ),
@@ -70,13 +82,18 @@ class AddFormState extends State<AddForm> {
                 onPressed: () async {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
+                    widget.exercise.id = widget.exercise.id + '123';
+                    widget.exercise.description = newDescription;
+                    widget.exercise.name = newName;
+                    SavedDB.addOne(widget.exercise, 'favourites');
+                    Navigator.pop(context);
                     // If the form is valid, display a snackbar. In the real world,
                     // you'd often call a server or save the information in a database
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                          duration: Duration(seconds: 5),
-                          content: Text(await SavedDB.addOne(
-                              Patient(nom: nom, prenom: prenom), 'bdhopital'))),
+                        duration: Duration(seconds: 5),
+                        content: Text('Exercise added to your favourites'),
+                      ),
                     );
                     Navigator.pop(context);
                   }

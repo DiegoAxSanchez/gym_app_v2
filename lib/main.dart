@@ -58,13 +58,18 @@ class _MyHomePageState extends State<Home_page> {
 
   Widget _listView(AsyncSnapshot snapshot) {
     if (!snapshot.hasData) {
-      return const Scaffold(
+      return Scaffold(
         body: Center(
-          child: Text(
-            'No Data...',
-            style: TextStyle(
-              fontSize: 32.0,
-            ),
+          child: Column(
+            children: [
+              Image.asset('assets/ripple'),
+              const Text(
+                'No Data...',
+                style: TextStyle(
+                  fontSize: 32.0,
+                ),
+              ),
+            ],
           ),
         ),
       );

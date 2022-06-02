@@ -12,8 +12,8 @@ import 'Models/Exercise.dart';
 
 //created by :
 //  Diego Sanchez for Ahuntsic(School Project)
-//TODO add drawer for auth, +workouts where text to speech implements timer+reps+motivational msgs
-// TODO add calendar to plan workouts + alarms/reminders
+//  TODO add drawer for auth, +workouts where text to speech implements timer+reps+motivational msgs
+//  TODO add calendar to plan workouts + alarms/reminders
 void main() async {
   runApp(
     const MaterialApp(
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<Home_page> {
         body: Center(
           child: Column(
             children: [
-              Image.asset('assets/ripple'),
+              Image.asset('assets/ripple.gif'),
               const Text(
                 'No Data...',
                 style: TextStyle(

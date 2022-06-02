@@ -14,7 +14,11 @@ import 'Models/Exercise.dart';
 
 void main() async {
   runApp(
-    MaterialApp(title: 'gym_app_v2', home: Home_page()),
+    MaterialApp(
+      title: 'gym_app_v2',
+      home: Home_page(),
+      initialRoute: '/',
+    ),
   );
 }
 
@@ -87,11 +91,11 @@ class _MyHomePageState extends State<Home_page> {
               },
               title: Text(
                 exercises[index].target,
-                style: Theme.of(context).textTheme.headline3,
+                style: Theme.of(context).textTheme.headline4,
               ),
               subtitle: Text(
                 exercises[index].bodyPart,
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headline6,
               ),
               trailing: FadeInImage.assetNetwork(
                 placeholder: 'assets/spinner.gif',
@@ -109,24 +113,30 @@ class _MyHomePageState extends State<Home_page> {
             );
           },
         ),
-        floatingActionButton: Container(
-          margin: EdgeInsets.all(8),
-          alignment: Alignment(0.1, 0),
-          child: FloatingActionButton(
-            heroTag: "FavouritesButton",
-            tooltip: "Go to Favourites",
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Favourites()),
-              ).then(reload);
-            },
-            backgroundColor: Colors.red[800],
-            child: Icon(
-              Icons.favorite_outline,
-              color: Colors.white,
+        floatingActionButton: Wrap(
+          //will break to another line on overflow
+          direction: Axis.horizontal, //use vertical to show  on vertical axis
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.all(8),
+              alignment: Alignment(0.1, 0),
+              child: FloatingActionButton(
+                heroTag: "FavouritesButton",
+                tooltip: "Go to Favourites",
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Favourites()),
+                  ).then(reload);
+                },
+                backgroundColor: Colors.red[800],
+                child: Icon(
+                  Icons.favorite_outline,
+                  color: Colors.white,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       );
     }

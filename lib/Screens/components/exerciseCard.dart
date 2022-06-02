@@ -13,18 +13,14 @@ class ExerciseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Exercise ${exercise.id}'),
-      ),
-      body: Center(
+    return SizedBox(
+      child: Center(
         child: GestureDetector(
           onTap: () async {
             try {
               http.Response response =
                   await http.get(Uri.parse(exercise.gifUrl));
               exercise.gif = base64.encode(response.bodyBytes);
-              SavedDB.loadGif(exercise, 'exercises');
             } catch (err) {
               print('No internet mah dude');
             }
@@ -40,11 +36,19 @@ class ExerciseCard extends StatelessWidget {
           child: Column(
             children: [
               Stack(
+                alignment: AlignmentDirectional.bottomEnd,
                 children: [
+                  CircleAvatar(
+                    foregroundImage: NetworkImage(exercise.gifUrl),
+                    backgroundImage: MemoryImage(
+                        Uint8List.fromList(base64.decode(exercise.gif))),
+                    radius: 100,
+                  ),
                   IconButton(
                     icon: Icon(Icons.favorite, color: Colors.blue[600]),
+                    iconSize: 34,
                     onPressed: () async {
-                      exercise.id = exercise.id + '123';
+                      exercise.id = exercise.id + '01';
                       SavedDB.addOne(exercise, 'favourites');
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -55,34 +59,20 @@ class ExerciseCard extends StatelessWidget {
                       );
                     },
                   ),
-                  CircleAvatar(
-                    foregroundImage: NetworkImage(exercise.gifUrl),
-                    backgroundImage: MemoryImage(
-                        Uint8List.fromList(base64.decode(exercise.gif))),
-                    radius: 100,
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
+                ],
+              ),
+              Column(
+                children: [
+                  Text(
+                    exercise.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                       color: Colors.black,
-                    ),
-                    child: Text(
-                      exercise.equipment,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 241, 241, 241),
-                      ),
                     ),
                   ),
                 ],
-              ),
-              Text(
-                exercise.name,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
               ),
             ],
           ),

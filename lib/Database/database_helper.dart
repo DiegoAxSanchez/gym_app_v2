@@ -24,14 +24,14 @@ class SavedDB {
       version: 1,
       onCreate: (sql.Database database, int version) async {
         await createTables(database);
-        await fillTables();
+        await fillTables(database);
       },
     );
   }
 
-  static Future<void> fillTables() async {
+  static Future<void> fillTables(sql.Database database) async {
     List<Exercise> exercises = await connectWithAPI();
-    await addAll(exercises);
+    await addAll(exercises, database);
   }
 
   static Future<List<Exercise>> fetchAll() async {
@@ -85,7 +85,7 @@ class SavedDB {
 
   static Future<String> addOne(Exercise exercise, String tableName) async {
     final db = await SavedDB.database();
-    await db.insert(tableName, exercise.toMap(),
+    await db.insert(tableName, exercise.toMapFavourites(),
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return "${exercise.id}, a ete ajoute avec succes";
   }
@@ -123,20 +123,19 @@ class SavedDB {
     return "Exercise ${id} efface avec succes";
   }
 
-  static Future<void> addAll(List<Exercise> exercises) async {
-    final db = await SavedDB.database();
+  static Future<void> addAll(
+      List<Exercise> exercises, sql.Database database) async {
     for (Exercise exercise in exercises) {
-      await db.insert('exercises', exercise.toMap(),
+      await database.insert('exercises', exercise.toMap(),
           conflictAlgorithm: sql.ConflictAlgorithm.replace);
     }
     //when we have our complete list of text
-    await addCategories();
+    await addCategories(database);
   }
 
-  static Future<void> addCategories() async {
-    final db = await SavedDB.database();
+  static Future<void> addCategories(sql.Database database) async {
     final List<Map<String, dynamic>> maps =
-        await db.rawQuery('SELECT * FROM exercises GROUP BY target');
+        await database.rawQuery('SELECT * FROM exercises GROUP BY target');
     List<Exercise> categories = List.generate(maps.length, (i) {
       return Exercise(
         bodyPart: maps[i]["bodyPart"],
@@ -155,7 +154,7 @@ class SavedDB {
       } catch (err) {
         print('No internet mah dude');
       }
-      await db.insert('categories', exercise.toMap(),
+      await database.insert('categories', exercise.toMap(),
           conflictAlgorithm: sql.ConflictAlgorithm.replace);
     }
   }
@@ -175,11 +174,5 @@ class SavedDB {
         gif: maps[i]["gif"],
       );
     });
-  }
-
-  static Future<void> loadGif(Exercise exercise, String tableName) async {
-    final db = await SavedDB.database();
-    await db.insert(tableName, exercise.toMap(),
-        conflictAlgorithm: sql.ConflictAlgorithm.replace);
   }
 }

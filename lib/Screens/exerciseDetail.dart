@@ -18,6 +18,9 @@ class ExerciseDetail extends StatelessWidget {
       defaultText = exercise.description;
     }
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Exercise id ${exercise.id}'),
+      ),
       body: ListView(
         children: [
           FadeInImage.assetNetwork(
@@ -39,8 +42,11 @@ class ExerciseDetail extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.only(bottom: 8),
-                      child: Text(exercise.name,
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                      child: Text(exercise.name.toUpperCase(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          )),
                     ),
                     Text(exercise.bodyPart,
                         style: TextStyle(color: Colors.grey[500]))
@@ -118,7 +124,7 @@ class ExerciseDetail extends StatelessWidget {
                     icon: Icon(Icons.delete, color: Colors.blue[600]),
                     onPressed: () {
                       SavedDB.delete(int.parse(exercise.id), 'favourites');
-                      Navigator.pop(context);
+                      Navigator.popUntil(context, ModalRoute.withName('/'));
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           duration: Duration(seconds: 5),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gym_app_v2/Database/database_helper.dart';
 import 'package:gym_app_v2/Models/Exercise.dart';
 import 'package:gym_app_v2/Screens/components/addForm.dart';
+import 'package:gym_app_v2/Screens/videoDetail.dart';
 
 class ExerciseDetail extends StatelessWidget {
   Exercise exercise;
@@ -12,10 +13,14 @@ class ExerciseDetail extends StatelessWidget {
   ExerciseDetail({Key? key, required this.exercise}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    bool video = false;
     String defaultText =
-        'This Exercise targets ${exercise.target} it is great to develop your ${exercise.bodyPart}, you will need ${exercise.equipment} to perform it safely';
+        'This Exercise targets ${exercise.target} it is great to develop your ${exercise.bodyPart}, you will need ${exercise.equipment} to perform it safely\nadd a video that you wish to save to rewatch it';
     if (exercise.description != '') {
       defaultText = exercise.description;
+      if (defaultText == 'video') {
+        video = true;
+      }
     }
     return Scaffold(
       appBar: AppBar(
@@ -149,20 +154,44 @@ class ExerciseDetail extends StatelessWidget {
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Flexible(
+              Visibility(
+                visible: !video,
+                child: Flexible(
                   child: Padding(
-                padding: const EdgeInsets.all(32),
-                child: Text(
-                  defaultText,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontSize: 14,
-                    letterSpacing: 1.6,
-                    color: Colors.blue[600],
+                    padding: const EdgeInsets.all(32),
+                    child: Text(
+                      defaultText,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: 14,
+                        letterSpacing: 1.6,
+                        color: Colors.blue[600],
+                      ),
+                    ),
                   ),
                 ),
-              ))
+              ),
+              Visibility(
+                visible: video,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+                  child: ElevatedButton(
+                    // Within the `FirstScreen` widget
+                    onPressed: () {
+                      // Navigate to the second screen using a named route.
+                      Navigator.push<void>(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) => Video(),
+                        ),
+                      );
+                    },
+                    child: const Text('Video'),
+                  ),
+                ),
+              ),
             ],
           ),
         ],

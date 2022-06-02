@@ -39,6 +39,7 @@ class ExerciseCard extends StatelessWidget {
                 alignment: AlignmentDirectional.bottomEnd,
                 children: [
                   CircleAvatar(
+                    backgroundColor: Colors.transparent,
                     foregroundImage: NetworkImage(exercise.gifUrl),
                     backgroundImage: MemoryImage(
                         Uint8List.fromList(base64.decode(exercise.gif))),

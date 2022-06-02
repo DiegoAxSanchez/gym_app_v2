@@ -91,7 +91,7 @@ class SavedDB {
   }
 
   // static Future<int> searchByName(Exercise exercise) async {
-  //   //TODO
+  //   //TODO implement search bar
   //   final db = await SavedDB.database();
   //   final List<Map<String, dynamic>> maps = await db
   //       .query('exercises', where: 'name = ?', whereArgs: [exercise.name]);

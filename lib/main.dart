@@ -12,6 +12,10 @@ import 'package:flutter/material.dart';
 
 import 'Models/Exercise.dart';
 
+//created by :
+//  Diego Sanchez for Ahuntsic(School Project)
+//TODO add drawer for auth, +workouts where text to speech implements timer+reps+motivational msgs
+// TODO add calendar to plan workouts + alarms/reminders
 void main() async {
   runApp(
     MaterialApp(

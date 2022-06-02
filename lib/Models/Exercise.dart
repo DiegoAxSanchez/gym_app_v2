@@ -1,7 +1,7 @@
 class Exercise {
   final String bodyPart, equipment, target, gifUrl;
   String gif, id, description, name;
-
+//TODO add videos to the database that explain the exercise in great detail -> final String utubeUrl = 'IL8BZpbtwEs'
   Exercise({
     required this.bodyPart,
     required this.equipment,
